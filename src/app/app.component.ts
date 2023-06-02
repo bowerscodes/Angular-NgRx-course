@@ -1,4 +1,5 @@
 import { AppState } from './auth/reducers'
+import { isLoggedIn, isLoggedOut } from './auth/auth.selectors';
 import {Component, OnInit} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {Observable} from "rxjs";
@@ -46,12 +47,12 @@ export class AppComponent implements OnInit {
 
       this.isLoggedIn$ = this.store
         .pipe(
-          map(state => !!state["auth"].user)
+          select(isLoggedIn)
         );
 
       this.isLoggedOut$ = this.store
         .pipe(
-          map(state => !state["auth"].user)
+          select(isLoggedOut)
         );
 
     }
