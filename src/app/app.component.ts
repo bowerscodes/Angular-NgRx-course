@@ -1,3 +1,4 @@
+import { AppState } from './auth/reducers'
 import {Component, OnInit} from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {Observable} from "rxjs";
@@ -13,7 +14,12 @@ export class AppComponent implements OnInit {
 
     loading = true;
 
-    constructor(private router: Router) {
+    // $ in variable ames denotes an observable:
+    isLoggedIn$: Observable<boolean>;
+
+    isLoggedOut$: Observable<boolean>;
+
+    constructor(private router: Router, private store: Store<AppState>) {
 
     }
 
@@ -37,6 +43,16 @@ export class AppComponent implements OnInit {
           }
         }
       });
+
+      this.isLoggedIn$ = this.store
+        .pipe(
+          map(state => !!state["auth"].user)
+        );
+
+      this.isLoggedOut$ = this.store
+        .pipe(
+          map(state => !state["auth"].user)
+        );
 
     }
 
