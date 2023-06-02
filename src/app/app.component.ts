@@ -1,4 +1,5 @@
-import { AppState } from './auth/reducers'
+import { AuthState } from './auth/reducers'
+import {login, logout} from './auth/auth.actions'
 import { isLoggedIn, isLoggedOut } from './auth/auth.selectors';
 import {Component, OnInit} from '@angular/core';
 import {select, Store} from "@ngrx/store";
@@ -20,7 +21,7 @@ export class AppComponent implements OnInit {
 
     isLoggedOut$: Observable<boolean>;
 
-    constructor(private router: Router, private store: Store<AppState>) {
+    constructor(private router: Router, private store: Store<AuthState>) {
 
     }
 
@@ -58,7 +59,8 @@ export class AppComponent implements OnInit {
     }
 
     logout() {
-
+      
+      this.store.dispatch(logout());
     }
 
 }
